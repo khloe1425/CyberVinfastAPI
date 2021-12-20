@@ -10,6 +10,12 @@ const OrderModel = require('./models/Order');
 const ServicesModel = require('./models/Services');
 const PostModel = require('./models/Post');
 const QuestionModel = require('./models/Question');
+const EngineModel = require('./models/Engine');
+const ExteriorModel = require('./models/Exterior');
+const InteriorModel = require('./models/Interior');
+const SizeModel = require('./models/Size');
+const SafeSystemModel = require('./models/SafeSystem');
+const FeeModel = require('./models/Fee');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
@@ -32,6 +38,12 @@ const Order = OrderModel(sequelize, DataTypes)
 const Services = ServicesModel(sequelize, DataTypes)
 const Post = PostModel(sequelize, DataTypes)
 const Question = QuestionModel(sequelize, DataTypes)
+const Engine = EngineModel(sequelize, DataTypes)
+const Exterior = ExteriorModel(sequelize, DataTypes)
+const Interior = InteriorModel(sequelize, DataTypes)
+const Size = SizeModel(sequelize, DataTypes)
+const SafeSystem = SafeSystemModel(sequelize, DataTypes)
+const Fee = FeeModel(sequelize, DataTypes)
 
 // Association car
 Car.belongsTo(Category, { foreignKey: "category" });
@@ -58,6 +70,14 @@ Booktest.belongsTo(Showroom, { foreignKey: "showroom_id" });
 Question.belongsTo(User, { foreignKey: "user_id" });
 Question.belongsTo(Car, { foreignKey: "car_id" });
 
+// Reference to car
+Engine.belongsTo(Car, { foreignKey: "car_id" });
+Size.belongsTo(Car, { foreignKey: "car_id" });
+Exterior.belongsTo(Car, { foreignKey: "car_id" });
+Interior.belongsTo(Car, { foreignKey: "car_id" });
+SafeSystem.belongsTo(Car, { foreignKey: "car_id" });
+Fee.belongsTo(Car, { foreignKey: "car_id" });
+
 module.exports = {
     User,
     Car,
@@ -68,5 +88,11 @@ module.exports = {
     Order,
     Services,
     Post,
-    Question
+    Question,
+    Engine,
+    Size,
+    Exterior,
+    Interior,
+    SafeSystem,
+    Fee
 }

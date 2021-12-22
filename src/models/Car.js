@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         countInStock: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        isComplete: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
         }
     });
 };

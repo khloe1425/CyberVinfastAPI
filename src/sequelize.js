@@ -7,7 +7,7 @@ const ShowroomModel = require('./models/Showroom');
 const CategoryModel = require('./models/Category');
 const ImageModel = require('./models/Image');
 const OrderModel = require('./models/Order');
-const ServicesModel = require('./models/Services');
+const ServiceModel = require('./models/Service');
 const PostModel = require('./models/Post');
 const QuestionModel = require('./models/Question');
 const EngineModel = require('./models/Engine');
@@ -35,7 +35,7 @@ const Showroom = ShowroomModel(sequelize, DataTypes)
 const Category = CategoryModel(sequelize, DataTypes)
 const Image = ImageModel(sequelize, DataTypes)
 const Order = OrderModel(sequelize, DataTypes)
-const Services = ServicesModel(sequelize, DataTypes)
+const Service = ServiceModel(sequelize, DataTypes)
 const Post = PostModel(sequelize, DataTypes)
 const Question = QuestionModel(sequelize, DataTypes)
 const Engine = EngineModel(sequelize, DataTypes)
@@ -46,6 +46,7 @@ const SafeSystem = SafeSystemModel(sequelize, DataTypes)
 const Fee = FeeModel(sequelize, DataTypes)
 
 // Association car
+Car.belongsTo(Showroom, { foreignKey: "showroom_id" });
 Car.belongsTo(Category, { foreignKey: "category" });
 Car.hasMany(Image, {
     foreignKey: "car_id"
@@ -57,9 +58,9 @@ Order.belongsTo(Car, { foreignKey: "car_id" });
 Order.belongsTo(Showroom, { foreignKey: "showroom_id" });
 
 // Association Services
-Services.belongsTo(User, { foreignKey: "user_id" });
-Services.belongsTo(Car, { foreignKey: "car_id" });
-Services.belongsTo(Showroom, { foreignKey: "showroom_id" });
+Service.belongsTo(User, { foreignKey: "user_id" });
+Service.belongsTo(Car, { foreignKey: "car_id" });
+Service.belongsTo(Showroom, { foreignKey: "showroom_id" });
 
 // Association Book test
 Booktest.belongsTo(User, { foreignKey: "user_id" });
@@ -86,7 +87,7 @@ module.exports = {
     Category,
     Image,
     Order,
-    Services,
+    Service,
     Post,
     Question,
     Engine,

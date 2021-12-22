@@ -22,6 +22,7 @@ exports.protect = async (req, res, next) => {
                 "username",
                 "email",
                 "avatar",
+                "isAdmin",
             ],
             where: {
                 id: decoded.id,
@@ -32,19 +33,19 @@ exports.protect = async (req, res, next) => {
         next();
     } catch (error) {
         next({
-            message: "You need to be logged in to visit this route",
-            statusCode: 401,
+            message: "Something is wrong",
+            statusCode: 500,
         });
     }
 };
 
 exports.admin = async (req, res, next) => {
-    if (req.user.isAdmin) {
+    if (req.user && req.user.isAdmin) {
         next();
+    } else {
+        return next({
+            message: "Authorization denied, only admins can visit this route",
+            statusCode: 401,
+        });
     }
-
-    return next({
-        message: "Authorization denied, only admins can visit this route",
-        statusCode: 401,
-    });
 };

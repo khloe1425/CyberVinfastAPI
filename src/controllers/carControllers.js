@@ -9,10 +9,12 @@ const {
     SafeSystem,
     Fee,
     Showroom
-} = require('../../sequelize');
-const asyncHandler = require('../../middleware/asyncHandler');
-const Size = require('../../models/Size');
+} = require('../sequelize');
+const asyncHandler = require('../middleware/asyncHandler');
 
+// @desc    Create Car
+// @route   POST /api/admin/car
+// @access  Private/Admin
 exports.createCar = asyncHandler(async (req, res, next) => {
     const car = await Car.create({
         ...req.body.car,
@@ -61,7 +63,7 @@ exports.createCar = asyncHandler(async (req, res, next) => {
             ...req.body.safesystem,
             car_id: car.id
         });
-        
+
         car.setDataValue('safeSystem', safesystem);
     }
 
@@ -70,7 +72,7 @@ exports.createCar = asyncHandler(async (req, res, next) => {
             ...req.body.fee,
             car_id: car.id
         });
-        
+
         car.setDataValue('fee', fee);
     }
 
@@ -81,6 +83,9 @@ exports.createCar = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true, data: car });
 });
 
+// @desc    Add Image for Car
+// @route   POST /api/admin/car/:id/image
+// @access  Private/Admin
 exports.addImage = asyncHandler(async (req, res, next) => {
     const car = await Car.findByPk(req.params.id);
 
@@ -100,12 +105,18 @@ exports.addImage = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true, data: image });
 });
 
+// @desc    Get All Cars
+// @route   POST /api/admin/car
+// @access  Public
 exports.getAllCars = asyncHandler(async (req, res, next) => {
     const cars = await Car.findAll();
 
     res.status(200).json({ success: true, data: cars });
 });
 
+// @desc    Get Car By Id
+// @route   GET /api/admin/car/:id
+// @access  Public
 exports.getCar = asyncHandler(async (req, res, next) => {
     const car = await Car.findByPk(req.params.id, {
         include: [
@@ -154,6 +165,76 @@ exports.getCar = asyncHandler(async (req, res, next) => {
     car.setDataValue('exterior', exterior);
     car.setDataValue('interior', interior);
     car.setDataValue('safesystem', safesystem);
+
+    res.status(200).json({ success: true, data: car });
+});
+
+exports.updateCar = asyncHandler(async (req, res, next) => {
+    await Car.update(req.body, {
+        where: { id: req.params.id },
+    });
+
+    const car = await Car.findByPk(req.params.id);
+
+    res.status(200).json({ success: true, data: car });
+});
+
+
+exports.updateSizeCar = asyncHandler(async (req, res, next) => {
+    return updateComptCar(Size, req, res, next);
+});
+
+
+exports.updateEngineCar = asyncHandler(async (req, res, next) => {
+    return updateComptCar(Engine, req, res, next);
+});
+
+
+exports.updateExteriorCar = asyncHandler(async (req, res, next) => {
+    return updateComptCar(Exterior, req, res, next);
+});
+
+
+exports.updateInteriorCar = asyncHandler(async (req, res, next) => {
+    return updateComptCar(Interior, req, res, next);
+});
+
+exports.updateSafeSystemCar = asyncHandler(async (req, res, next) => {
+    return updateComptCar(SafeSystem, req, res, next);
+});
+
+const updateComptCar = async (model, req, res, next) => {
+    const compt = await model.findOne({
+        where: { car_id: req.params.id },
+    })
+
+    if (!compt) {
+        return next({
+            message: `No component found for Car's ID - ${req.params.id}`,
+            statusCode: 404,
+        });
+    }
+
+    await compt.update(req.body)
+
+    res.json({ success: true, data: { compt } });
+}
+
+exports.getFeeCar = asyncHandler(async (req, res, next) => {
+    const car = await Car.findByPk(req.params.id);
+
+    if (!car) {
+        return next({
+            message: `No car found for ID - ${req.params.id}`,
+            statusCode: 404,
+        });
+    }
+
+    const fee = await Fee.findOne({
+        where: { car_id: req.params.id }
+    });
+
+    car.setDataValue('fee', fee);
 
     res.status(200).json({ success: true, data: car });
 });

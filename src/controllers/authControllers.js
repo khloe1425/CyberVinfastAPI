@@ -4,6 +4,9 @@ const { Op } = require('sequelize');
 const { User } = require('../sequelize');
 const asyncHandler = require('../middleware/asyncHandler');
 
+// @desc    Sign up for user
+// @route   POST /api/auth/signup
+// @access  Public
 exports.signup = asyncHandler(async (req, res, next) => {
     const user = await User.create(req.body);
 
@@ -19,6 +22,9 @@ exports.signup = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true, data: token });
 });
 
+// @desc    Login for user
+// @route   POST /api/auth/login
+// @access  Public
 exports.login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -45,6 +51,9 @@ exports.login = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true, data: token });
 });
 
+// @desc    Get info of user
+// @route   GET /api/auth/me
+// @access  Private
 exports.me = asyncHandler(async (req, res) => {
     const user = await User.findByPk(req.user.id, {
         attributes: [
@@ -54,6 +63,7 @@ exports.me = asyncHandler(async (req, res) => {
             "username",
             "email",
             "avatar",
+            "isAdmin",
         ],
     });
 

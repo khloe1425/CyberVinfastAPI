@@ -4,9 +4,12 @@ const {
     Car,
     User,
     Showroom,
-} = require('../../sequelize');
-const asyncHandler = require('../../middleware/asyncHandler');
+} = require('../sequelize');
+const asyncHandler = require('../middleware/asyncHandler');
 
+// @desc    Order Car
+// @route   POST /api/order
+// @access  Private
 exports.createOrder = asyncHandler(async (req, res, next) => {
     const car = await Car.findByPk(req.body.car_id);
 
@@ -43,12 +46,18 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true, data: order });
 });
 
+// @desc    Get all orders
+// @route   GET /api/admin/order
+// @access  Private/Admin
 exports.getAllOrders = asyncHandler(async (req, res, next) => {
     const orders = await Order.findAll();
 
     res.status(200).json({ success: true, data: orders });
 });
 
+// @desc    Get Detail Order
+// @route   POST /api/order/:id
+// @access  Private
 exports.getDetailOrder = asyncHandler(async (req, res, next) => {
     const order = await Order.findByPk(req.params.id, {
         include: [

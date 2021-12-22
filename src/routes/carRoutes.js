@@ -6,8 +6,12 @@ const CarCtrl = require('../controllers/carControllers');
 // Car
 router
     .route('/')
-    .post(protect, admin, CarCtrl.createCar)
+    .post(CarCtrl.createCar)
     .get(CarCtrl.getAllCars)
+
+router
+    .route('/compare')
+    .post(CarCtrl.compareCar)
 
 router
     .route('/:id')

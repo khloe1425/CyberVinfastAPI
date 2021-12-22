@@ -47,7 +47,7 @@ exports.bookTestCar = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get all book tests
-// @route   GET /api/admin/booktest
+// @route   GET /api/booktest
 // @access  Private/Admin
 exports.getAllBookTests = asyncHandler(async (req, res, next) => {
     const booktests = await Booktest.findAll();

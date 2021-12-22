@@ -3,7 +3,7 @@ const { Category } = require('../sequelize');
 const asyncHandler = require('../middleware/asyncHandler');
 
 // @desc    Create Category
-// @route   POST /api/admin/category
+// @route   POST /api/category
 // @access  Private/Admin
 exports.createCategory = asyncHandler(async (req, res, next) => {
     const category = await Category.create({ ...req.body });
@@ -12,7 +12,7 @@ exports.createCategory = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get All Category
-// @route   GET /api/admin/category
+// @route   GET /api/category
 // @access  Public
 exports.getAllCategories = asyncHandler(async (req, res, next) => {
     const categories = await Category.findAll();
@@ -21,7 +21,7 @@ exports.getAllCategories = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get Category By Id
-// @route   GET /api/admin/category/:id
+// @route   GET /api/category/:id
 // @access  Public
 exports.getCategory = asyncHandler(async (req, res, next) => {
     const category = await Category.findByPk(req.params.id);
@@ -30,7 +30,7 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Update Category By Id
-// @route   PUT /api/admin/category/:id
+// @route   PUT /api/category/:id
 // @access  Private/Admin
 exports.updateCategory = asyncHandler(async (req, res, next) => {
     await Category.update(req.body, {
@@ -43,7 +43,7 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Delete Category By Id
-// @route   DELETE /api/admin/category/:id
+// @route   DELETE /api/category/:id
 // @access  Private/Admin
 exports.deleteCategory = asyncHandler(async (req, res, next) => {
     await Category.destroy({

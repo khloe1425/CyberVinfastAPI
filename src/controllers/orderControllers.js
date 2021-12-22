@@ -47,7 +47,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get all orders
-// @route   GET /api/admin/order
+// @route   GET /api/order
 // @access  Private/Admin
 exports.getAllOrders = asyncHandler(async (req, res, next) => {
     const orders = await Order.findAll();

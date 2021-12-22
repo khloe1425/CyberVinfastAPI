@@ -45,7 +45,7 @@ exports.createQuestion = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get all questions
-// @route   GET /api/admin/question
+// @route   GET /api/question
 // @access  Private/Admin
 exports.getAllQuestions = asyncHandler(async (req, res, next) => {
     const questions = await Question.findAll();

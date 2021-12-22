@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const winston = require('winston');
 
 const { logger } = require('./config/logModule');
 

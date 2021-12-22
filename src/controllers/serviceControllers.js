@@ -47,7 +47,7 @@ exports.createService = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get all services
-// @route   GET /api/admin/service
+// @route   GET /api/service
 // @access  Private/Admin
 exports.getAllServices = asyncHandler(async (req, res, next) => {
     const services = await Service.findAll();

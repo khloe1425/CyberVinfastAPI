@@ -3,7 +3,7 @@ const { Showroom } = require('../sequelize');
 const asyncHandler = require('../middleware/asyncHandler');
 
 // @desc    Create Showroom
-// @route   POST /api/admin/showroom
+// @route   POST /api/showroom
 // @access  Private/Admin
 exports.createShowroom = asyncHandler(async (req, res, next) => {
     const showroom = await Showroom.create({ ...req.body });
@@ -12,7 +12,7 @@ exports.createShowroom = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get All Showroom
-// @route   GET /api/admin/showroom
+// @route   GET /api/showroom
 // @access  Public
 exports.getAllShowrooms = asyncHandler(async (req, res, next) => {
     const showrooms = await Showroom.findAll();
@@ -21,7 +21,7 @@ exports.getAllShowrooms = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get Showroom By Id
-// @route   GET /api/admin/showroom/:id
+// @route   GET /api/showroom/:id
 // @access  Public
 exports.getShowroom = asyncHandler(async (req, res, next) => {
     const showroom = await Showroom.findByPk(req.params.id);
@@ -30,7 +30,7 @@ exports.getShowroom = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Update Showroom By Id
-// @route   PUT /api/admin/showroom/:id
+// @route   PUT /api/showroom/:id
 // @access  Private/Admin
 exports.updateShowroom = asyncHandler(async (req, res, next) => {
     await Showroom.update(req.body, {
@@ -43,7 +43,7 @@ exports.updateShowroom = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Delete Showroom By Id
-// @route   DELETE /api/admin/showroom/:id
+// @route   DELETE /api/showroom/:id
 // @access  Private/Admin
 exports.deleteShowroom = asyncHandler(async (req, res, next) => {
     await Showroom.destroy({
